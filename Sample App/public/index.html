@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html ng-app="fourProject">
+
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Optimize mobile viewport -->
+    <title>TaskMe</title>
+
+    <!-- load bootstrap -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- SPELLS -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <!-- load jquery -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <!-- load angular -->
+    <script src="core.js"></script>
+
+</head>
+
+<body ng-controller="mainController">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h1>TaskMe</h1>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+            </div>
+            <!--/.navbar-collapse -->
+        </div>
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+
+    </div>
+
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div align="right" id="divproject">
+            <center><a href="#task" class="btn btn-primary btn-lg" class="" data-toggle="modal">+ Create Task</a></center>
+            <br>
+            </div>
+            <table class="table">
+                <tr>
+                    <td><h3>Task Name</h3></td>
+                    <td><h3>Assignee</h3></td> 
+                    <td><h3>Creation Date</h3></td>
+                    <td><h3>Due Date</h3></td>
+                    <td><h3>Description</h3></td>
+                    <td id ="textAlertsFlag" onload="checkTextAlerts()"><h3>Text Alerts</h3></td>
+                    <td></td>
+                </tr>
+                <label>Search:
+                <input ng-model="searchText">
+                </label>
+                <tr ng-repeat="task in tasks | filter: searchText">
+                    <td>{{ task.taskName }}</td> 
+                    <td>{{ task.assignee }}</td>
+                    <td>{{ task.creation_date }}</td>
+                    <td>{{ task.due_date }} </td>
+                    <td>{{ task.description }}</td>
+                    <td>{{ task.text_alerts }}</td>
+                    <td class="close btn btn-danger" ng-click="deleteTask(task._id)">Delete</td>
+                </tr>
+            </table>
+
+        <hr>
+
+        <footer>
+            <p>&copy; 2016 TaskMe, Inc</p>
+        </footer>
+    </div>
+    <!-- /container -->
+    <div class="modal fade" id="task" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Task Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="project-form" class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text-center">
+                            <form name ="taskDetails">
+                                <div class="form-group">
+ 
+                                     <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                                    <input type="text" name="taskName" class="form-control input-lg text-center" placeholder="Enter Task Name" ng-model="formData.taskName">
+                                    <input type="text" name="assignee" class="form-control input-lg text-center" placeholder="Enter Assignee" ng-model="formData.assignee">
+                                    <input type="text" name="dueDate" class="form-control input-lg text-center" placeholder="Enter Due Date (MM-DD-YYYY)" ng-model="formData.due_date">
+                                    <input type="text" name="description" class="form-control input-lg text-center" placeholder="Description" ng-model="formData.description">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input name ="textAlerts" type="checkbox" ng-model="formData.text_alerts" value ="yes"> Text Alerts
+                                        </label>
+                                    </div>
+
+                                <!-- createProject() WILL CREATE NEW Projects -->
+                                <button id="submit" type="submit" class="btn btn-primary btn-lg" onclick="return validateForm()" data-dismiss="modal">Add</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-default" data-dismiss="modal">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="mask" onclick="toggleDetailDiv(-1);"></div>
+    <script src="js/main.js" type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
